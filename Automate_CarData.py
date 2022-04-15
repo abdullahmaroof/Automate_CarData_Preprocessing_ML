@@ -431,3 +431,15 @@ class guianalysis:
 root = Tk()
 obj = guianalysis(root)
 mainloop()
+
+cardataset.info()
+
+print("Counting fuel type in dataset by feature Fuel_Type")
+print(cardataset.Fuel_Type.value_counts())
+print("\n\nCounting seller type in dataset by feature Seller_Type")
+print(cardataset.Seller_Type.value_counts())
+print("\n\nCounting transmission values in dataset by feature Transmission")
+print(cardataset.Transmission.value_counts())
+print("\n\nCounting transmission values in dataset by feature Transmission")
+print(cardataset.DriveTrain.value_counts())
+
