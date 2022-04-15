@@ -432,7 +432,7 @@ root = Tk()
 obj = guianalysis(root)
 mainloop()
 
-cardataset.info()
+print(cardataset.info())
 
 print("Counting fuel type in dataset by feature Fuel_Type")
 print(cardataset.Fuel_Type.value_counts())
@@ -443,3 +443,56 @@ print(cardataset.Transmission.value_counts())
 print("\n\nCounting transmission values in dataset by feature Transmission")
 print(cardataset.DriveTrain.value_counts())
 
+cardataset.replace({'Fuel_Type':{'Petrol':0,'Diesel':1,'CNG':2}},inplace=True)
+
+cardataset.replace({'Seller_Type':{'Dealer':0,'Individual':1}},inplace=True)
+
+cardataset.replace({'Transmission':{'Manual':0,'Automatic':1}},inplace=True)
+
+cardataset.replace({'DriveTrain':{'Front':0,'Rear':1,'All':2}},inplace=True)
+
+print(cardataset)
+
+X = cardataset.drop(['Make','Origin','Type','Model','Selling_Price'],axis=1)
+Y = cardataset['Selling_Price']
+
+print(X)
+print("\n\n")
+print(Y)
+
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.1, random_state=2)
+
+lin_reg_model = LinearRegression()
+lin_reg_model.fit(X_train,Y_train)
+training_data_prediction = lin_reg_model.predict(X_train)
+
+error_score = metrics.r2_score(Y_train, training_data_prediction)
+print("R squared Error : ", error_score)
+
+plt.scatter(Y_train, training_data_prediction)
+plt.xlabel("Actual Price")
+plt.ylabel("Predicted Price")
+plt.title(" Actual Prices vs Predicted Prices")
+plt.show()
+
+lass_reg_model = Lasso()
+lass_reg_model.fit(X_train,Y_train)
+training_data_prediction = lass_reg_model.predict(X_train)
+error_score = metrics.r2_score(Y_train, training_data_prediction)
+print("R squared Error : ", error_score)
+plt.scatter(Y_train, training_data_prediction)
+plt.xlabel("Actual Price")
+plt.ylabel("Predicted Price")
+plt.title(" Actual Prices vs Predicted Prices")
+plt.show()
+
+test_data_prediction = lass_reg_model.predict(X_test)
+error_score = metrics.r2_score(Y_test, test_data_prediction)
+print("R squared Error : ", error_score)
+plt.scatter(Y_test, test_data_prediction)
+plt.scatter(Y_train, training_data_prediction)
+plt.scatter(Y_test, test_data_prediction, color='red')
+plt.xlabel("Actual Price")
+plt.ylabel("Predicted Price")
+plt.title(" Actual Prices vs Predicted Prices")
+plt.show()
