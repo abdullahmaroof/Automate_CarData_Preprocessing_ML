@@ -4,6 +4,12 @@ import datetime
 import pyttsx3
 from PIL import ImageTk, Image
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import Lasso
+from sklearn import metrics
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -17,6 +23,7 @@ currentDataAndTime = datetime.datetime.now()
 dateAndTime = currentDataAndTime.strftime("%Y.%m.%d--%H.%M.%S")
 
 cardataset = pd.read_csv('CarsData.csv')
+print(cardataset)
 
 def completedataset():
     speak("Show complete dataset of car details")
@@ -420,3 +427,7 @@ class guianalysis:
         root = Tk()
         obj = menupage(root)
         mainloop()
+
+root = Tk()
+obj = guianalysis(root)
+mainloop()
